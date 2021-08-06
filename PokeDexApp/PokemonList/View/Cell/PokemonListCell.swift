@@ -22,7 +22,7 @@ class PokemonListCell: UITableViewCell {
         Corner.createCornerCardView(view: pokemonView)
     }
 
-    func ShowCell(with pokemon: pokemonData, idPokemon: Int) {
+    func ShowCell(with pokemon: PokemonData, idPokemon: Int) {
        let SVGCoder = SDImageSVGCoder.shared
         SDImageCodersManager.shared.addCoder(SVGCoder)
         let url = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/" + "\(idPokemon).svg" )

@@ -12,10 +12,9 @@ import PKHUD
 class PokemonRandomViewController: UIViewController {
     
     //MARK: - Attributes
-    var pokemon: pokemonDetail!
     let manager = CoreDataManager()
     var type: Int = 0
-    var id: Int = 0
+    let viewModel: PokemonRandomViewModel = PokemonRandomViewModel(repository: APIRepository(httpClient: URLSessionHTTPClient()))
     
     //MARK: - Outlets
     @IBOutlet weak var randomCollectionView: UICollectionView!
@@ -48,15 +47,10 @@ class PokemonRandomViewController: UIViewController {
             break
         }
         
-        let randomInt = Int.random(in: 1..<898)
-        let randomViewModel: PokemonRandomViewModel = PokemonRandomViewModel()
-        randomViewModel.getRandomPokemon(id: randomInt) { pokemonDetail in
-            DispatchQueue.main.async {
-                self.id = randomInt
-                self.pokemon = pokemonDetail
-                self.randomCollectionView.reloadData()
-                HUD.hide()
-            }
+        viewModel.loadRandomPokemon()
+        viewModel.didLoadRandom = { [weak self] in
+            guard let self = self else { return }
+            self.randomCollectionView.reloadData()
         }
     }
     
@@ -77,7 +71,7 @@ class PokemonRandomViewController: UIViewController {
     
     @objc  func SwipeRight(_ gesture: UISwipeGestureRecognizer) {
         self.type = 1
-        manager.savePokemon(name: pokemon.name, url: (pokemon.sprites.other?.official_artwork?.front_default)!, id: id)
+        manager.savePokemon(name: viewModel.pokemon.name, url: (viewModel.pokemon.sprites.other?.official_artwork?.front_default)!, id: viewModel.id)
         loadRandom()
     }
     
@@ -96,8 +90,8 @@ extension PokemonRandomViewController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = randomCollectionView.dequeueReusableCell(withReuseIdentifier: PokemonRandomCell.key, for: indexPath) as! PokemonRandomCell
         
-        if pokemon != nil {
-            cell.showData(data: pokemon)
+        if viewModel.pokemon != nil {
+            cell.showData(data: viewModel.pokemon)
         }
         
         return cell

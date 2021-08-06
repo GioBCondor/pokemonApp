@@ -14,8 +14,8 @@ class PokemonListViewController: UIViewController {
     @IBOutlet weak var pokemonListTable: UITableView!
     
     //MARK: - Attributes
-    var viewModel: PokemonListViewModel = PokemonListViewModel()
-   
+    var viewModel: PokemonListViewModel = PokemonListViewModel(repository: APIRepository(httpClient: URLSessionHTTPClient()))
+
     //MARK: - Outlets
     @IBOutlet var tableList: UITableView!
     
@@ -52,11 +52,6 @@ class PokemonListViewController: UIViewController {
         navigationController?.pushViewController(favoriteController, animated: false)
     }
     //MARK: -Actions -Targets
-    /*@objc func actionfavoriteButton(sender: UIButton!){
-        let favoriteController = Controller.FavoriteViewController()
-        navigationController?.pushViewController(favoriteController, animated: false)
-        
-    }*/
     
      @IBAction func actionRandomButton(_ sender: Any) {
         let randomController = ControllerManager.PokemonRandomViewController()

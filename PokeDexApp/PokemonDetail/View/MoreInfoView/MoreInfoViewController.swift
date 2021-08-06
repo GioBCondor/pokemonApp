@@ -9,7 +9,7 @@ import UIKit
 
 class MoreInfoViewController: UIViewController {
     
-    var viewModel: PokemonDetailViewModel = PokemonDetailViewModel()
+    var viewModel: PokemonDetailViewModel = PokemonDetailViewModel(repository: APIRepository(httpClient: URLSessionHTTPClient()))
     //var pokemonDetail: pokemonDetail!
     var typeInfo = 0
     

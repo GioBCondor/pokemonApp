@@ -10,15 +10,20 @@ import PKHUD
 
 class PokemonDetailViewModel {
     
-    var pokemon: pokemonData!
-    var pokemonDetail: pokemonDetail!
+    var pokemon: PokemonData!
+    var pokemonDetail: PokemonDetail!
     var sprites: [String] = []
     var namePokemon: String = ""
     var didLoadDetail: (() -> Void)?
     
-    func getPokemonDetail(name: String,completionHandler: @escaping (pokemonDetail?) -> Void)
+    let repository: APIRepositoryProtocol
+    init(repository: APIRepositoryProtocol) {
+        self.repository = repository
+    }
+    
+    func getPokemonDetail(name: String,completionHandler: @escaping (PokemonDetailResult) -> Void)
     {
-        APIRepository.getDetail(name: name) { pokemonDetail in
+        repository.getDetail(name: name) { pokemonDetail in
             completionHandler(pokemonDetail)
         }
     }
@@ -28,15 +33,16 @@ class PokemonDetailViewModel {
         if pokemon != nil{
             namePokemon = pokemon.name
         }
-        self.getPokemonDetail(name: namePokemon)  { pokemonDetail in
-            if let infoDetail = pokemonDetail {
-                self.pokemonDetail = infoDetail
-                DispatchQueue.main.async {
-                    self.didLoadDetail?()
-                    HUD.hide()
-                    //self.showDetailData()
-                    //self.spritesCollection.reloadData()
-                }
+        self.getPokemonDetail(name: namePokemon)  { result in
+            switch result {
+            case .success(let pokemonDetailResult):
+                    self.pokemonDetail = pokemonDetailResult
+                    DispatchQueue.main.async {
+                        self.didLoadDetail?()
+                        HUD.hide()
+                    }
+            case .failure(let error):
+                print(error)
             }
         }
     }

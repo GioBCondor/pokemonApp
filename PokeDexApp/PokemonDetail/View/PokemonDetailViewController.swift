@@ -11,7 +11,8 @@ import PKHUD
 
 class PokemonDetailViewController: UIViewController {
     
-    var viewModel: PokemonDetailViewModel = PokemonDetailViewModel()
+    var viewModel: PokemonDetailViewModel = PokemonDetailViewModel(repository: APIRepository(httpClient: URLSessionHTTPClient()))
+    
     
     //MARK: - Outlets
     @IBOutlet weak var pokeNameLabel: UILabel!

@@ -11,7 +11,7 @@ import PKHUD
 
 class PokemonListViewModel {
     
-    var pokemon: [pokemonData] = []
+    var pokemon: [PokemonData] = []
     var name: String?
     var id = 0
     var loadingPokemon = false
@@ -19,16 +19,22 @@ class PokemonListViewModel {
     var total = 0
     var didLoadList: (() -> Void)?
     
-    func getPokemons(page: Int = 0 ,completionHandler: @escaping (pokemonList?) -> Void) {
-        APIRepository.getList(page: page) { pokemonList in
+    let repository: APIRepositoryProtocol
+    init(repository: APIRepositoryProtocol) {
+        self.repository = repository
+    }
+    
+    func getPokemons(page: Int = 0 ,completionHandler: @escaping (PokemonListResult?) -> Void) {
+        repository.getList(page: page) { pokemonList in
             completionHandler(pokemonList)
         }
     }
     
     func loadPokemonList() {
         HUD.show(.progress)
-        self.getPokemons(page: curretPage) { pokemonList in
-            if let pokemonList = pokemonList {
+        self.getPokemons(page: curretPage) { result in
+            switch result {
+            case .success(let pokemonList):
                 self.pokemon += pokemonList.results
                 self.total = pokemonList.count
                 DispatchQueue.main.async {
@@ -36,6 +42,10 @@ class PokemonListViewModel {
                     self.loadingPokemon = false
                     HUD.hide()
                 }
+            case .failure(let error):
+                print(error)
+            case .none:
+                print("Error")
             }
         }
     }

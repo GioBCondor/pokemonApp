@@ -7,55 +7,44 @@
 
 import Foundation
 
-class APIRepository {
-    
-    static private let limit = Constants.Pagination.limit
-    
-    class func getList(page: Int = 0, completionHandler: @escaping (_ data: pokemonList? ) -> Void ){
+typealias PokemonListResult = ServiceResult<PokemonList>
+typealias PokemonDetailResult = ServiceResult<PokemonDetail>
 
-        let offset = page * limit
-        let url = Constants.Url.pokemonList + "?limit=\(limit)&offset=\(offset)"
-        let urlConvert = URL(string: url)
-        let task = URLSession.shared.dataTask(with: urlConvert!){
-            (data, response, error) in
-            if let data = data {
-                if let json = try? JSONDecoder().decode(pokemonList.self, from: data){
-                    completionHandler(json)
-                }
-            }
-        }
-        task.resume()
+protocol APIRepositoryProtocol {
+    
+    func getList(page: Int, completionHandler: @escaping (PokemonListResult) -> Void)
+    func getDetail(name: String?, completionHandler: @escaping (PokemonDetailResult) -> Void)
+    func getRandomPokemon(id: Int?, completionHandler: @escaping (PokemonDetailResult) -> Void)
+}
+
+class APIRepository: APIRepositoryProtocol {
+    
+    private let limit = Constants.Pagination.limit
+    
+    var httpClient: HTTPClient
+    
+    init(httpClient: HTTPClient) {
+        self.httpClient = httpClient
     }
     
-    class func getDetail(name: String?, completionHandler: @escaping (_ data: pokemonDetail? ) -> Void) {
-        
-        let url = Constants.Url.pokemonList + "\(name!)"
-        let urlConvert = URL(string: url)
-        let task = URLSession.shared.dataTask(with: urlConvert!){
-            (data, response, error) in
-            if let data = data {
-                if let json = try? JSONDecoder().decode(pokemonDetail.self, from: data){
-                    completionHandler(json)
-                }
-            }
-        }
-        task.resume()
+    func getList(page: Int, completionHandler: @escaping (PokemonListResult) -> Void) {
+        guard let url = URL(string: Constants.Url.pokemonList) else { return }
+            let urlRequest = URLRequest(url: url)
+            httpClient.request(url: urlRequest, completion: completionHandler)
     }
     
-    class func getRandomPokemon(id: Int?, completionHandler: @escaping (_ data: pokemonDetail? ) -> Void) {
-        
-        let url = Constants.Url.pokemonList + "\(id!)"
-        let urlConvert = URL(string: url)
-        let task = URLSession.shared.dataTask(with: urlConvert!){
-            (data, response, error) in
-            if let data = data {
-                if let json = try? JSONDecoder().decode(pokemonDetail.self, from: data){
-                    completionHandler(json)
-                }
-            }
-        }
-        task.resume()
+    func getDetail(name: String?, completionHandler: @escaping (PokemonDetailResult) -> Void) {
+        guard let url = URL(string: Constants.Url.pokemonList + "\(name!)") else { return }
+            let urlRequest = URLRequest(url: url)
+            httpClient.request(url: urlRequest, completion: completionHandler)
     }
+    
+    func getRandomPokemon(id: Int?, completionHandler: @escaping (PokemonDetailResult) -> Void) {
+         
+        guard let url = URL(string: Constants.Url.pokemonList + "\(id!)") else { return }
+            let urlRequest = URLRequest(url: url)
+            httpClient.request(url: urlRequest, completion: completionHandler)
+     }
 }
 
 

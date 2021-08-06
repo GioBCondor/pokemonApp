@@ -20,7 +20,7 @@ class PokemonRandomCell: UICollectionViewCell {
         // Initialization code
     }
     
-    func showData(data: pokemonDetail){
+    func showData(data: PokemonDetail){
         pokemonNameLabel.text = data.name.capitalized
         let dataUrl = URL(string:(data.sprites.other?.official_artwork?.front_default)!)
         pokemonImage.sd_setImage(with: dataUrl, placeholderImage: UIImage(named: "placeholder.png"))

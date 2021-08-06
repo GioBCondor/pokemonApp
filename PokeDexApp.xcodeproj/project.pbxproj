@@ -60,6 +60,8 @@
 		710C228A51652BBD58CE658B /* Pods_PokeDexApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA17A98A1E56A696E238826 /* Pods_PokeDexApp.framework */; };
 		AAA450358CCF347596C2DD39 /* Pods_PokeDexApp_PokeDexAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88152E3B43C546688AF4588B /* Pods_PokeDexApp_PokeDexAppUITests.framework */; };
 		DB3E1FF22CE98C2ADCBE0B97 /* Pods_PokeDexAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF5F0A6345FBF425F1CD382 /* Pods_PokeDexAppTests.framework */; };
+		E386F4E026BB2EDF00EBB100 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E386F4DF26BB2EDF00EBB100 /* HTTPClient.swift */; };
+		E386F4E226BB2F2200EBB100 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E386F4E126BB2F2200EBB100 /* URLSessionHTTPClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +147,8 @@
 		896A03517F18FF73E44BA483 /* Pods-PokeDexApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokeDexApp.release.xcconfig"; path = "Target Support Files/Pods-PokeDexApp/Pods-PokeDexApp.release.xcconfig"; sourceTree = "<group>"; };
 		A6BF4F8E7B8D85A61E4C8D6C /* Pods-PokeDexApp-PokeDexAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokeDexApp-PokeDexAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-PokeDexApp-PokeDexAppUITests/Pods-PokeDexApp-PokeDexAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B93FBBCAA5ACDF39EA4876AE /* Pods-PokeDexApp-PokeDexAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokeDexApp-PokeDexAppUITests.release.xcconfig"; path = "Target Support Files/Pods-PokeDexApp-PokeDexAppUITests/Pods-PokeDexApp-PokeDexAppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		E386F4DF26BB2EDF00EBB100 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		E386F4E126BB2F2200EBB100 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +208,7 @@
 				0A4F107C268BCDD8000C604A /* PokemonRandom */,
 				0A4F1059268A6C38000C604A /* PokemonGenerations */,
 				0A4F104426897923000C604A /* PokemonDetail */,
+				E386F4DE26BB2E7C00EBB100 /* HttpClient */,
 				0A4F103426892568000C604A /* API */,
 				0A4F102126890EC5000C604A /* PokemonList */,
 				0A4F102026890EA3000C604A /* Home */,
@@ -494,6 +499,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		E386F4DE26BB2E7C00EBB100 /* HttpClient */ = {
+			isa = PBXGroup;
+			children = (
+				E386F4DF26BB2EDF00EBB100 /* HTTPClient.swift */,
+				E386F4E126BB2F2200EBB100 /* URLSessionHTTPClient.swift */,
+			);
+			path = HttpClient;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -755,7 +769,9 @@
 				0A4F109A268C002E000C604A /* FavoriteCell.swift in Sources */,
 				0A4F1039268926F5000C604A /* PokemonListViewModel.swift in Sources */,
 				0A4F104126892DB2000C604A /* Corner.swift in Sources */,
+				E386F4E226BB2F2200EBB100 /* URLSessionHTTPClient.swift in Sources */,
 				0A4F1096268BFFAB000C604A /* FavoriteViewController.swift in Sources */,
+				E386F4E026BB2EDF00EBB100 /* HTTPClient.swift in Sources */,
 				0A4F1088268BD3FC000C604A /* PokemonRandomCell.swift in Sources */,
 				0A4F1082268BD029000C604A /* PokemonRandomViewController.swift in Sources */,
 				0A4F1069268A7534000C604A /* Generation_vi.swift in Sources */,
